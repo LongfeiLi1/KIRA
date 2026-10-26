@@ -1,0 +1,76 @@
+{
+  "version": 4,
+  "physical_bounds": {
+    "r1": [
+      10000.0,
+      1000000.0
+    ],
+    "r2": [
+      10000.0,
+      1000000.0
+    ],
+    "cg": [
+      5e-12,
+      1e-10
+    ],
+    "cf": [
+      5e-12,
+      2e-10
+    ],
+    "current_scale": [
+      0.7,
+      1.4
+    ],
+    "output_scale": [
+      0.7,
+      1.4
+    ],
+    "cc_pf": [
+      1.0,
+      4.0
+    ]
+  },
+  "initial": {
+    "r1": 200000.0,
+    "r2": 200000.0,
+    "cg": 2e-11,
+    "cf": 4e-11,
+    "current_scale": 1.0,
+    "output_scale": 1.0,
+    "cc_pf": 2.0,
+    "rz_ohm": 4604.0
+  },
+  "optimizer": {
+    "backend": "shared scipy Powell with native convergence; real candidate cap independent of cache calls",
+    "coordinate_initialization": true,
+    "log_coordinate_probe_step": 0.08,
+    "early_stop": "Immediately on first full measured acceptance, then independent endpoint remeasurement; no forced budget exhaustion.",
+    "all_spice_attempts_charged": true,
+    "loss": "normalized log f0 and Q errors squared, power excess squared*100, PM and pass/stop dB deficits squared; 1000 per remaining hard scalar gate violation; 10000 if stability not true; invalid measurement 1e9",
+    "finite_budget_limitation": "120 real new full-circuit evaluations plus one independent endpoint. Cache hits do not consume the real evaluation allowance. Native convergence or first full feasibility may stop earlier. This cap is not a guarantee of global convergence.",
+    "max_native_function_calls": 5000,
+    "max_native_iterations": 50,
+    "xtol": 0.02,
+    "ftol": 0.01
+  },
+  "common_acceptance": {
+    "dc_gain_range": [
+      0.95,
+      1.05
+    ],
+    "dc_out_range_v": [
+      1.195,
+      1.205
+    ],
+    "minimum_saturation_margin_v": 0.05,
+    "fit_max_component_error": 0.03,
+    "step_final_error_max_v": 1e-05,
+    "step_tail_peak_to_peak_max_v": 1e-05,
+    "stability_status_required": "pass_numerical_local",
+    "stability_scope": "pinned SKY130 tt model and measured DC point; full closed-loop numerical small-signal check plus finite step recovery",
+    "global_nonlinear_or_pvt_certificate": "not_claimed",
+    "phase_margin_scope": "Tian two-port output return diagnostic, not sole full stability gate"
+  },
+  "phase_margin_min_deg": 60.0,
+  "task_data_distributed": false
+}

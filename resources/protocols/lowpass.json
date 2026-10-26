@@ -1,0 +1,45 @@
+{
+  "schema_version": 1,
+  "version": "candidate_retry_v1_development_20261010",
+  "status": "frozen",
+  "candidate_budget_by_level": {
+    "L1": 120,
+    "L2": 240,
+    "L3": 360
+  },
+  "proposal_only_not_frozen": {
+    "L1": 120,
+    "L2": 240,
+    "L3": 360
+  },
+  "max_attempts_per_process": 3,
+  "retry_scope": [
+    "timeout",
+    "transient_launch_error"
+  ],
+  "automatic_api_retries": 0,
+  "deterministic_errors_retry": false,
+  "consecutive_infrastructure_candidates_before_pause": 3,
+  "spice_timeout_seconds": 20,
+  "competitive_case_wall_limit": null,
+  "base_process_slots_per_candidate": 2,
+  "base_analysis_allowance_per_candidate": 10,
+  "max_llm_calls_per_case": 32,
+  "model": "qwen3.8-flash",
+  "endpoint_policy": "independent remeasurement; abnormal execution -> endpoint_unconfirmed; never pass",
+  "legacy_runs_modified": false,
+  "max_completion_tokens_per_call": null,
+  "api_timeout_seconds": 300,
+  "qualification_phase": "development_only",
+  "output_token_policy": "omit_use_service_default",
+  "timeout_calibration": {
+    "status": "qualified",
+    "scope": "SKLP nominal TT existing full evaluator; confirm with new integration smoke",
+    "historical_completed_processes": 679,
+    "max_completed_seconds": 12.67610889300704,
+    "p99_completed_seconds": 12.546386299654841,
+    "timeout_seconds": 20,
+    "max_margin_factor": 1.5777712363320964,
+    "historical_timeout_attempts": 1
+  }
+}

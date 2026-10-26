@@ -1,0 +1,42 @@
+{
+  "schema_version": 1,
+  "version": "candidate_retry_type_v2_development_20261010",
+  "status": "frozen",
+  "candidate_budget_by_level": {
+    "L1": 120,
+    "L2": 240,
+    "L3": 360
+  },
+  "max_attempts_per_process": 3,
+  "retry_scope": [
+    "timeout",
+    "transient_launch_error"
+  ],
+  "automatic_api_retries": 0,
+  "deterministic_errors_retry": false,
+  "consecutive_infrastructure_candidates_before_pause": 3,
+  "spice_timeout_seconds": 20,
+  "competitive_case_wall_limit": null,
+  "base_process_slots_per_candidate": 2,
+  "base_analysis_allowance_per_candidate": 11,
+  "max_llm_calls_per_case": 32,
+  "model": "qwen3.8-flash",
+  "endpoint_policy": "independent remeasurement; abnormal execution -> endpoint_unconfirmed; never pass",
+  "legacy_runs_modified": false,
+  "max_completion_tokens_per_call": null,
+  "api_timeout_seconds": 300,
+  "qualification_phase": "development_only",
+  "runtime_binding_version": "typed_runtime_20261010",
+  "analysis_allocation_evidence": {
+    "performance": 5,
+    "complete_mna": 6,
+    "reason": "three independent source excitations required for 38-variable mapping; no analysis omitted"
+  },
+  "output_token_policy": "omit_use_service_default",
+  "timeout_calibration": {
+    "status": "qualified",
+    "scope": "T2 unchanged native real OTA decks; historic representative measurements plus new integration qualification",
+    "timeout_seconds": 20,
+    "historical_max_completed_seconds": 12.927418125793338
+  }
+}

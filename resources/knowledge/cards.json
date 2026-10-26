@@ -1,0 +1,802 @@
+[
+  {
+    "id": "K01",
+    "version": "0.1",
+    "title": "拓扑、单位和频率定义",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Constant-real-gain SK has a second-order denominator; source cutoff scaling is not automatically natural frequency.",
+        "source_ids": [
+          "TI_SLOA049D"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "a=R1 R2 Cg Cf; b=(R1+R2)Cg+R1 Cf(1-K); f0=1/(2pi sqrt(a)); Q=sqrt(a)/b. Relative-DC f3dB is derived from Q, and equals f0 only for Butterworth Q.",
+        "assumptions": [
+          "mapped_nodes",
+          "si_units",
+          "ideal_passives",
+          "zero_source_impedance",
+          "infinite_input_impedance",
+          "zero_output_impedance",
+          "constant_real_gain",
+          "positive_b"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "verify_mapping_units",
+          "compute_ideal_metrics",
+          "request_response"
+        ]
+      }
+    ],
+    "source_ids": [
+      "TI_SLOA049D"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "mapped_nodes",
+      "si_units",
+      "ideal_passives",
+      "zero_source_impedance",
+      "infinite_input_impedance",
+      "zero_output_impedance",
+      "constant_real_gain",
+      "positive_b"
+    ],
+    "evidence_required": [
+      "node_mapping",
+      "metric_definition",
+      "response_validity"
+    ],
+    "optional_characterization": [
+      "node_mapping",
+      "metric_definition",
+      "response_validity"
+    ],
+    "action_ids": [
+      "verify_mapping_units",
+      "compute_ideal_metrics",
+      "request_response"
+    ],
+    "equation_tool_ids": [
+      "sk_constant_gain_v1",
+      "f3db_relative_dc_v1"
+    ],
+    "counterexamples": [
+      "Additional poles/zeros invalidate second-order Q; never fill missing Q from a formula.",
+      "Relative-input -3dB requires actual DC gain."
+    ],
+    "fallback_action": "request_response",
+    "retrieval_tags": [
+      "mapping",
+      "units",
+      "f0",
+      "q",
+      "cutoff"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K02",
+    "version": "0.1",
+    "title": "受约束RC坐标",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Unity gain and equal R can reduce Q sensitivity under the stated ideal model.",
+        "source_ids": [
+          "ADI_VARIATION"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "Common R*k gives f0/k, same Q; Cf*u,Cg/u gives same f0,Q*u; Q<=0.5sqrt(Cf/Cg); Q/Q_equal=sech(ln(R1/R2)/2).",
+        "assumptions": [
+          "mapped_nodes",
+          "ideal_unity_reference",
+          "legal_physical_domain"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "propose_common_r",
+          "propose_reciprocal_c"
+        ]
+      }
+    ],
+    "source_ids": [
+      "ADI_VARIATION"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "mapped_nodes",
+      "ideal_unity_reference",
+      "legal_physical_domain"
+    ],
+    "evidence_required": [
+      "node_mapping",
+      "response_validity",
+      "rc_direction_evidence"
+    ],
+    "optional_characterization": [
+      "node_mapping",
+      "response_validity",
+      "rc_direction_evidence"
+    ],
+    "action_ids": [
+      "propose_common_r",
+      "propose_reciprocal_c"
+    ],
+    "equation_tool_ids": [
+      "bounded_rc_coordinate_v1"
+    ],
+    "counterexamples": [
+      "Near equal R, first-order resistor-ratio Q increase vanishes; this is not amplifier insufficiency.",
+      "Changing Cf/Cg changes actual OTA loading; finite K changes optimal ratio."
+    ],
+    "fallback_action": "request_response",
+    "retrieval_tags": [
+      "frequency_error",
+      "q_error",
+      "rc_direction"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K03",
+    "version": "0.1",
+    "title": "阻抗尺度与同响应变换",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Source/OTA impedances and high impedance affect loading, bias, noise and parasitics.",
+        "source_ids": [
+          "TI_SBOA226",
+          "ADI_BLD8"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "All R*k,C/k preserve ideal constant-K H(s); simple series Rsrc may be included as R1_total=R1+Rsrc.",
+        "assumptions": [
+          "mapped_nodes",
+          "ideal_constant_gain_reference",
+          "explicit_source_and_load"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "propose_impedance_scale",
+          "request_output_impedance"
+        ]
+      }
+    ],
+    "source_ids": [
+      "TI_SBOA226",
+      "ADI_BLD8"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "mapped_nodes",
+      "ideal_constant_gain_reference",
+      "explicit_source_and_load"
+    ],
+    "evidence_required": [
+      "node_mapping",
+      "port_identity",
+      "source_load_known"
+    ],
+    "optional_characterization": [
+      "node_mapping",
+      "port_identity",
+      "source_load_known"
+    ],
+    "action_ids": [
+      "propose_impedance_scale",
+      "request_output_impedance"
+    ],
+    "equation_tool_ids": [
+      "bounded_rc_coordinate_v1"
+    ],
+    "counterexamples": [
+      "Lower R/higher C increases drive demand; differential y-z capacitance is not Cg.",
+      "Physical passive parasitic explanations require those devices in the DUT."
+    ],
+    "fallback_action": "request_output_impedance",
+    "retrieval_tags": [
+      "impedance",
+      "loading",
+      "scaling"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K04",
+    "version": "0.1",
+    "title": "有限A0与带宽证据",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "GBW product applies over a dominant-pole region; extra amplifier poles matter.",
+        "source_ids": [
+          "ADI_MT033",
+          "TI_SLOA024B"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "For unilateral zero-Zout block B=A/(1+A); positive constant A0 lowers ideal Q by 1/[1+rho/(1+A0)] without changing natural f0. Dynamic A(s) does not share this guaranteed direction.",
+        "assumptions": [
+          "matched_operating_point",
+          "matched_ports",
+          "explicit_source_and_load"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "request_amp_response",
+          "propose_amp_target"
+        ]
+      }
+    ],
+    "source_ids": [
+      "ADI_MT033",
+      "TI_SLOA024B"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "matched_operating_point",
+      "matched_ports",
+      "explicit_source_and_load"
+    ],
+    "evidence_required": [
+      "model_validity",
+      "port_identity",
+      "amp_complex_response"
+    ],
+    "optional_characterization": [
+      "model_validity",
+      "port_identity",
+      "amp_complex_response"
+    ],
+    "action_ids": [
+      "request_amp_response",
+      "propose_amp_target"
+    ],
+    "equation_tool_ids": [
+      "sk_mna_v1"
+    ],
+    "counterexamples": [
+      "Frequency or one UGBW number cannot establish an AMP bottleneck.",
+      "An unloaded descriptor is not unconditionally reusable under changed loading."
+    ],
+    "fallback_action": "request_amp_response",
+    "retrieval_tags": [
+      "finite_gain",
+      "gbw",
+      "phase",
+      "q_shift"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K05",
+    "version": "0.1",
+    "title": "阻带上翘与Zout/馈通",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Finite closed-loop output impedance can create high-frequency feedthrough.",
+        "source_ids": [
+          "TI_SLOA024B"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "Only in the stated high-frequency capacitive-short limit: H_HF≈(R2||Zout)/(R1+(R2||Zout)); if |Zout|<<R1,R2 then H_HF≈Zout/R1.",
+        "assumptions": [
+          "mapped_nodes",
+          "verified_high_frequency_region",
+          "matched_output_port"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "request_output_impedance",
+          "propose_impedance_scale"
+        ]
+      }
+    ],
+    "source_ids": [
+      "TI_SLOA024B"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "mapped_nodes",
+      "verified_high_frequency_region",
+      "matched_output_port"
+    ],
+    "evidence_required": [
+      "stopband_validity",
+      "port_identity"
+    ],
+    "optional_characterization": [
+      "stopband_validity",
+      "port_identity"
+    ],
+    "action_ids": [
+      "request_output_impedance",
+      "propose_impedance_scale"
+    ],
+    "equation_tool_ids": [
+      "bounded_rc_coordinate_v1"
+    ],
+    "counterexamples": [
+      "Same shape may arise from numerical floor, sweep errors or other paths; not a unique diagnosis.",
+      "Do not add output stages or isolation networks to fixed topology."
+    ],
+    "fallback_action": "request_response",
+    "retrieval_tags": [
+      "stopband_uplift",
+      "feedthrough",
+      "zout"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K06",
+    "version": "0.1",
+    "title": "容性负载、补偿和驱动",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Capacitive loads and output impedance add dynamics; compensation methods have topology-specific tradeoffs.",
+        "source_ids": [
+          "TI_SSZT999"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "I_CL=CL*dVz/dt, but I_Cf=Cf*d(Vz-Vx)/dt; Cf is not a grounded load of equal value.",
+        "assumptions": [
+          "matched_ports",
+          "fixed_external_spec",
+          "declared_load"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "request_loaded_response",
+          "propose_amp_target"
+        ]
+      }
+    ],
+    "source_ids": [
+      "TI_SSZT999"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "matched_ports",
+      "fixed_external_spec",
+      "declared_load"
+    ],
+    "evidence_required": [
+      "port_identity",
+      "source_load_known",
+      "response_validity"
+    ],
+    "optional_characterization": [
+      "port_identity",
+      "source_load_known",
+      "response_validity"
+    ],
+    "action_ids": [
+      "request_loaded_response",
+      "propose_amp_target"
+    ],
+    "equation_tool_ids": [],
+    "counterexamples": [
+      "Overshoot may be intended high Q; instability does not uniquely imply inadequate drive.",
+      "No automatic bias increase or added isolation resistor."
+    ],
+    "fallback_action": "request_loaded_response",
+    "retrieval_tags": [
+      "load",
+      "ringing",
+      "drive",
+      "compensation"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K07",
+    "version": "0.1",
+    "title": "完整稳定性证据优先",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Loop-return interpretation requires valid topology/cut and loading; a critical wire must break relevant loops for that loop-based interpretation.",
+        "source_ids": [
+          "TIAN2001"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "request_stability_validation"
+        ]
+      }
+    ],
+    "source_ids": [
+      "TIAN2001"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "matched_dc_point",
+      "preserved_loading",
+      "validated_stability_bench"
+    ],
+    "evidence_required": [
+      "stability_validity"
+    ],
+    "optional_characterization": [
+      "stability_validity"
+    ],
+    "action_ids": [
+      "request_stability_validation"
+    ],
+    "equation_tool_ids": [],
+    "counterexamples": [
+      "Closed-loop I/O phase is not PM; isolated OTA PM or short step is insufficient.",
+      "A fitted transfer can hide modes; invalid common bench is measurement/setup unknown, not an optimizer physical failure."
+    ],
+    "fallback_action": "request_stability_validation",
+    "retrieval_tags": [
+      "stability",
+      "unknown_stability",
+      "measurement_invalid"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K08",
+    "version": "0.1",
+    "title": "频带积分噪声",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "extension_noise",
+    "enabled_by_default": false,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Uncorrelated noise powers add; resistor thermal voltage PSD is 4kTR; current noise sees its own impedance.",
+        "source_ids": [
+          "ADI_MT047",
+          "ADI_MT048"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "Output noise variance integrates sum |Hi|^2 Si over specified band; correlated sources need cross terms.",
+        "assumptions": [
+          "noise_spec_enabled",
+          "specified_noise_band",
+          "noise_models_enabled"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "request_noise_analysis"
+        ]
+      }
+    ],
+    "source_ids": [
+      "ADI_MT047",
+      "ADI_MT048"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "noise_spec_enabled",
+      "specified_noise_band",
+      "noise_models_enabled"
+    ],
+    "evidence_required": [
+      "noise_spectrum",
+      "noise_band"
+    ],
+    "optional_characterization": [
+      "noise_spectrum",
+      "noise_band"
+    ],
+    "action_ids": [
+      "request_noise_analysis"
+    ],
+    "equation_tool_ids": [],
+    "counterexamples": [
+      "Each injection has its own Hi, not signal H; one spot density or first-order ENBW is insufficient."
+    ],
+    "fallback_action": "report_unknown",
+    "retrieval_tags": [
+      "noise"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K09",
+    "version": "0.1",
+    "title": "大信号与动态范围",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "extension_large_signal",
+    "enabled_by_default": false,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Common mode, swing, slew, drive and distortion require specified amplitude/frequency/load tests.",
+        "source_ids": [
+          "TI_SBOA226",
+          "ADI_MT053",
+          "ADI_MT046"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "Sinusoid maximum slope is 2pi*f*Vp; not sufficient for low THD.",
+        "assumptions": [
+          "large_signal_spec_enabled",
+          "fixed_input_amplitude",
+          "declared_load"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "request_large_signal_analysis"
+        ]
+      }
+    ],
+    "source_ids": [
+      "TI_SBOA226",
+      "ADI_MT053",
+      "ADI_MT046"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "large_signal_spec_enabled",
+      "fixed_input_amplitude",
+      "declared_load"
+    ],
+    "evidence_required": [
+      "large_signal_conditions",
+      "distortion_evidence"
+    ],
+    "optional_characterization": [
+      "large_signal_conditions",
+      "distortion_evidence"
+    ],
+    "action_ids": [
+      "request_large_signal_analysis"
+    ],
+    "equation_tool_ids": [],
+    "counterexamples": [
+      "AC success does not establish dynamic range; high-Q gain changes output amplitude.",
+      "Do not reduce required input, supply or load to manufacture success."
+    ],
+    "fallback_action": "report_unknown",
+    "retrieval_tags": [
+      "slew",
+      "distortion",
+      "dynamic_range"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K10",
+    "version": "0.1",
+    "title": "有功耗约束的局部AMP可实现性",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "core",
+    "enabled_by_default": true,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "Real amplifier selection and compensation involve coupled speed/noise/power/stability tradeoffs; no universal SKY130 lower bound follows.",
+        "source_ids": [
+          "ADI_AN1584",
+          "ADI_MT033"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "propose_amp_target",
+          "request_amp_local_measurement"
+        ]
+      }
+    ],
+    "source_ids": [
+      "ADI_AN1584",
+      "ADI_MT033"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "matched_operating_point",
+      "actual_power_accounting",
+      "bounded_device_domain"
+    ],
+    "evidence_required": [
+      "actual_power",
+      "amp_local_evidence",
+      "model_validity"
+    ],
+    "optional_characterization": [
+      "actual_power",
+      "amp_local_evidence",
+      "model_validity"
+    ],
+    "action_ids": [
+      "propose_amp_target",
+      "request_amp_local_measurement"
+    ],
+    "equation_tool_ids": [],
+    "counterexamples": [
+      "One finite sizing failure is not infeasibility; increasing bias need not improve all metrics.",
+      "Ideal RC response invariance does not guarantee full-circuit power invariance."
+    ],
+    "fallback_action": "request_amp_local_measurement",
+    "retrieval_tags": [
+      "power",
+      "amp_feasibility",
+      "target_realization"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  },
+  {
+    "id": "K11",
+    "version": "0.1",
+    "title": "物理无源、PVT与失配",
+    "topology": [
+      "sallen_key_lp_unity"
+    ],
+    "scope": "extension_pvt",
+    "enabled_by_default": false,
+    "claims": [
+      {
+        "kind": "source_fact",
+        "text": "SKY130 precision resistor and MiM subcircuits include model-specific parasitics and validity restrictions.",
+        "source_ids": [
+          "SKY130_DEVICES"
+        ]
+      },
+      {
+        "kind": "derived",
+        "text": "Ideal unity log sensitivities: df0/dR,C=-1/2; dQ/dCf=+1/2,dQ/dCg=-1/2; R sensitivities=(R2-R1)/[2(R1+R2)] and opposite; covariance propagation needs matched J and correlation.",
+        "assumptions": [
+          "physical_passives_or_pvt_enabled",
+          "pinned_installed_models",
+          "explicit_variation_definition"
+        ]
+      },
+      {
+        "kind": "policy_proposal",
+        "text": "Allowed actions and fallback are framework proposals, not source-proven policies or guarantees of DUT improvement.",
+        "action_ids": [
+          "request_pvt_analysis"
+        ]
+      }
+    ],
+    "source_ids": [
+      "SKY130_DEVICES"
+    ],
+    "node_map_id": "sk_lp_cg_cf_v1",
+    "assumptions": [
+      "physical_passives_or_pvt_enabled",
+      "pinned_installed_models",
+      "explicit_variation_definition"
+    ],
+    "evidence_required": [
+      "physical_passive_identity",
+      "variation_model"
+    ],
+    "optional_characterization": [
+      "physical_passive_identity",
+      "variation_model"
+    ],
+    "action_ids": [
+      "request_pvt_analysis"
+    ],
+    "equation_tool_ids": [],
+    "counterexamples": [
+      "Ideal passives have no modeled layout mismatch; corners are not statistical sigma or manufacturing yield."
+    ],
+    "fallback_action": "report_unknown",
+    "retrieval_tags": [
+      "pvt",
+      "mismatch",
+      "physical_passive"
+    ],
+    "review_status": "source_checked_math_checked_not_dut_validated",
+    "data_partition": "general_knowledge",
+    "snapshot_hashes_available": false
+  }
+]

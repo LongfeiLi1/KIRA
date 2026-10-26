@@ -1,0 +1,86 @@
+{
+  "TI_SLOA049D": {
+    "id": "TI_SLOA049D",
+    "url": "https://www.ti.com/lit/an/sloa049d/sloa049d.pdf",
+    "locator": "§3 p.4; §6 p.8; Appendix A.1 p.19",
+    "document_revision": "2023-02"
+  },
+  "ADI_VARIATION": {
+    "id": "ADI_VARIATION",
+    "url": "https://www.analog.com/en/resources/technical-articles/minimizing-componentvariation-sensitivity-in-single-op-amp-filters.html",
+    "locator": "K=1 Simplifies; Filter Sensitivity",
+    "document_revision": "2002-07-22"
+  },
+  "TI_SBOA226": {
+    "id": "TI_SBOA226",
+    "url": "https://www.ti.com/lit/pdf/SBOA226",
+    "locator": "Design Notes; Design Steps pp.1–3",
+    "document_revision": "2021-06"
+  },
+  "ADI_BLD8": {
+    "id": "ADI_BLD8",
+    "url": "https://www.analog.com/media/en/training-seminars/design-handbooks/basic-linear-design/chapter8.pdf",
+    "locator": "§8.7 pp.8.110–8.117",
+    "document_revision": null
+  },
+  "ADI_MT033": {
+    "id": "ADI_MT033",
+    "url": "https://www.analog.com/media/en/training-seminars/tutorials/MT-033.pdf",
+    "locator": "pp.1–7",
+    "document_revision": "Rev.0"
+  },
+  "TI_SLOA024B": {
+    "id": "TI_SLOA024B",
+    "url": "https://www.ti.com/lit/an/sloa024b/sloa024b.pdf",
+    "locator": "§2 pp.2–3; §3.5–3.6 pp.6–8",
+    "document_revision": "2002-09"
+  },
+  "TI_SSZT999": {
+    "id": "TI_SSZT999",
+    "url": "https://www.ti.com/document-viewer/lit/html/SSZT999/GUID-7ACEA978-4202-4BB8-8E9A-DE4DEC6654C4",
+    "locator": "Introduction; Isolation Resistor; RISO+DFB",
+    "document_revision": "2017-08"
+  },
+  "TIAN2001": {
+    "id": "TIAN2001",
+    "url": "https://kenkundert.com/docs/cd2001-01.pdf",
+    "locator": "pp.37–38 applicability; Eq.20",
+    "document_revision": "2001"
+  },
+  "ADI_MT047": {
+    "id": "ADI_MT047",
+    "url": "https://www.analog.com/media/en/training-seminars/tutorials/mt-047.pdf",
+    "locator": "pp.1–4",
+    "document_revision": null
+  },
+  "ADI_MT048": {
+    "id": "ADI_MT048",
+    "url": "https://www.analog.com/media/en/training-seminars/tutorials/MT-048.pdf",
+    "locator": "pp.1–5",
+    "document_revision": null
+  },
+  "ADI_MT053": {
+    "id": "ADI_MT053",
+    "url": "https://www.analog.com/media/en/training-seminars/tutorials/MT-053.pdf",
+    "locator": "pp.1–2,7–8",
+    "document_revision": null
+  },
+  "ADI_MT046": {
+    "id": "ADI_MT046",
+    "url": "https://www.analog.com/media/en/training-seminars/tutorials/MT-046.pdf",
+    "locator": "p.1",
+    "document_revision": null
+  },
+  "ADI_AN1584": {
+    "id": "ADI_AN1584",
+    "url": "https://www.analog.com/en/resources/app-notes/an-1584.html",
+    "locator": "Circuit Function and Benefits; Circuit Description",
+    "document_revision": null
+  },
+  "SKY130_DEVICES": {
+    "id": "SKY130_DEVICES",
+    "url": "https://skywater-pdk.readthedocs.io/en/main/rules/device-details.html",
+    "locator": "Precision resistors and MiM capacitors",
+    "document_revision": "mutable; actual installed model must be pinned"
+  }
+}

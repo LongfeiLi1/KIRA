@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "kira-circuits"
+version = "0.1.0"
+description = "Circuit initialization and numerical response tools"
+requires-python = ">=3.10"
+dynamic = ["dependencies"]
+
+[project.scripts]
+kira = "cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+py-modules = ["api", "cli", "native_cli", "_paths", "ota_template"]
+
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["execution*", "initialization*", "native*", "numerics*", "pipeline*", "resources*"]
+namespaces = true
+
+[tool.setuptools.package-data]
+"*" = ["*.json", "LICENSE*", "*.txt"]
